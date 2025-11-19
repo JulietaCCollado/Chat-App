@@ -1,0 +1,15 @@
+<h1>Chat Rooms</h1>
+
+<% if @chat_rooms.any? %>
+  <ul class="space-y-2">
+    <% @chat_rooms.each do |chat_room| %>
+      <li>
+        <%= link_to chat_room.name, chat_room_path(chat_room), class: "text-blue-600 hover:underline" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No chat rooms available.</p>
+<% end %>
+
+<%= link_to "Create New Chat Room", new_chat_room_path, class: "mt-4 inline-block bg-blue-600 text-black px-4 py-2 rounded hover:bg-blue-700" %>

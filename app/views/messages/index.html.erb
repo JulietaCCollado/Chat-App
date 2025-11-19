@@ -1,0 +1,18 @@
+<h1>Chat Room</h1>
+
+<turbo-frame id="messages">
+  <div id="messages" style="max-height: 400px; overflow-y: auto;">
+    <% @messages.each do |message| %>
+      <p>
+        <strong><%= message.user.display_name || message.user.email %>:</strong> 
+        <%= message.content %>
+        <small><%= message.created_at.strftime("%H:%M") %></small>
+      </p>
+    <% end %>
+  </div>
+</turbo-frame>
+
+<%= form_with model: @message, data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" } do |form| %>
+  <%= form.text_field :content, placeholder: "Type a message..." %>
+  <%= form.submit "Send" %>
+<% end %>

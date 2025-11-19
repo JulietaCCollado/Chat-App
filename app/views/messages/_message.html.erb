@@ -1,0 +1,5 @@
+<p>
+  <strong><%= message.user.display_name || message.user.email %>:</strong> 
+  <%= message.content %>
+  <small><%= message.created_at.strftime("%H:%M") %></small>
+</p>

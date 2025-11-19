@@ -1,0 +1,31 @@
+<h1><%= @chat_room.name %></h1>
+
+<% if @is_member %>
+  <p>You are a member of this chat room.</p>
+  <%= button_to "Leave Room", leave_chat_room_path(@chat_room), method: :delete, class: "bg-red-500 text-black px-3 py-1 rounded" %>
+<% else %>
+  <p>You are not a member of this chat room.</p>
+  <%= button_to "Join Room", join_chat_room_path(@chat_room), method: :post, class: "bg-green-500 text-black px-3 py-1 rounded" %>
+<% end %>
+
+<h2>Participants</h2>
+<ul>
+  <% @chat_room.users.each do |user| %>
+    <li><%= user.display_name %></li>
+  <% end %>
+</ul>
+
+<div id="messages" style="max-height: 400px; overflow-y: auto; margin-top: 20px;">
+  <% @messages.each do |message| %>
+    <%= render partial: "messages/message", locals: { message: message } %>
+  <% end %>
+</div>
+
+<% if @is_member %>
+  <%= form_with model: [@chat_room, @message], data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }, class: "mt-4 flex gap-2 items-center" do |form| %>
+    <%= form.text_field :content, placeholder: "Type a message...", class: "flex-1 border p-2 rounded" %>
+    <%= form.submit "Send", class: "bg-blue-600 text-black px-4 py-2 rounded hover:bg-blue-700" %>
+  <% end %>
+<% else %>
+  <p class="text-gray-600 mt-4">Join the chat room to send messages.</p>
+<% end %>

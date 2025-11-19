@@ -1,0 +1,14 @@
+const messagesContainer = document.getElementById("messages");
+
+// Create new message element
+const messageElement = document.createElement("p");
+messageElement.innerHTML = `<strong><%= j @message.user.display_name || @message.user.email %>:</strong> <%= j @message.content %> <small><%= @message.created_at.strftime('%H:%M') %></small>`;
+
+// Append new message
+messagesContainer.appendChild(messageElement);
+
+// Clear textarea
+document.getElementById("message_content").value = "";
+
+// Scroll to bottom
+messagesContainer.scrollTop = messagesContainer.scrollHeight;
